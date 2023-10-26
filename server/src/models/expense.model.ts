@@ -4,18 +4,16 @@ import { UserModel } from './user.model';
 
 export type ExpenseDocument = HydratedDocument<ExpenseModel>;
 
-@Schema()
+@Schema({
+  timestamps: true,
+})
 export class ExpenseModel {
   @Prop()
   type: string;
-
   @Prop()
   amount: number;
-
   @Prop()
   category: string;
-  @Prop({ type: Date, required: true })
-  time: Date;
   @Prop()
   userId: string;
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'user' })

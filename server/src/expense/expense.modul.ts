@@ -2,12 +2,12 @@ import { Module } from '@nestjs/common';
 import { ExpenseService } from './expense.service';
 import { ExpenseController } from './expense.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ExpenseModel } from 'src/models/expense.model';
+import { ExpenseModel, ExpenseSchema } from 'src/models/expense.model';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
-      { name: ExpenseModel.name, schema: ExpenseModel },
+      { name: ExpenseModel.name, schema: ExpenseSchema },
     ]),
   ],
   controllers: [ExpenseController],

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { ExpenseModel } from 'src/models/expense.model';
+import { expenseData } from './expense.type';
 
 @Injectable()
 export class ExpenseService {
@@ -11,11 +12,26 @@ export class ExpenseService {
   getAllExpenses() {
     return this.expenseModel.find();
   }
-  postNewExpense() {
+
+  getExpenseById(id: string) {
+    return this.expenseModel.findOne({ _id: id });
+  }
+
+  postNewExpense(expenseData: expenseData) {
+    const { amount, category, type } = expenseData;
     const expense = new this.expenseModel();
-    expense.amount = 200;
-    expense.category = 'shopping';
-    expense.type = 'expenes';
+    expense.amount = amount;
+    expense.category = category;
+    expense.type = type;
     return expense.save();
+  }
+
+  updateExpense(id: string, updatedExpense: expenseData) {
+    const { amount, category, type } = updatedExpense;
+    return this.expenseModel.updateOne({ _id: id }, { amount, category, type });
+  }
+
+  deleteExpense(id: string) {
+    return this.expenseModel.deleteOne({ _id: id });
   }
 }
