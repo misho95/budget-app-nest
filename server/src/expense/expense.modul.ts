@@ -13,4 +13,4 @@ import { ExpenseModel } from 'src/models/expense.model';
   controllers: [ExpenseController],
   providers: [ExpenseService],
 })
-export class AppModule {}
+export class ExpenseModule {}

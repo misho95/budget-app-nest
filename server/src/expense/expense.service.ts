@@ -12,6 +12,10 @@ export class ExpenseService {
     return this.expenseModel.find();
   }
   postNewExpense() {
-    return 'add new post';
+    const expense = new this.expenseModel();
+    expense.amount = 200;
+    expense.category = 'shopping';
+    expense.type = 'expenes';
+    return expense.save();
   }
 }
