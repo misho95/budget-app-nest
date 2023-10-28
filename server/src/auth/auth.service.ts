@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { UserModel } from 'src/models/user.model';
 import { userLoginDataType, userSignUpType } from './auth.type';
 import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -13,7 +14,8 @@ export class AuthService {
   ) {}
   async signin(userData: userLoginDataType) {
     const user = await this.userModel.findOne({ email: userData.email });
-    if (user.password !== userData.password) {
+    const isMatch = await bcrypt.compare(userData.password, user.password);
+    if (!isMatch) {
       throw new UnauthorizedException();
     }
 
@@ -22,13 +24,22 @@ export class AuthService {
       access_token: await this.jwtService.signAsync(payload),
     };
   }
-  singup(userData: userSignUpType) {
+  async singup(userData: userSignUpType) {
     const { username, email, password } = userData;
+
+    const checkMail = await this.userModel.findOne({ email });
+
+    if (checkMail) {
+      return { error: 'Email is Arleady Used!' };
+    }
+
+    const saltOrRounds = 10;
+    const hashPassword = await bcrypt.hash(password, saltOrRounds);
 
     const user = new this.userModel();
     user.username = username;
     user.email = email;
-    user.password = password;
+    user.password = hashPassword;
     return user.save();
   }
 }

@@ -6,11 +6,13 @@ import {
   Param,
   Put,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { ExpenseService } from './expense.service';
-import { ExpenseModel } from 'src/models/expense.model';
 import { ExpenseInputValidator } from './expense.input.validator';
+import { AuthGuard } from 'src/auth/auth.guard';
 
+@UseGuards(AuthGuard)
 @Controller('/api/v1/expenses')
 export class ExpenseController {
   constructor(private readonly expenseService: ExpenseService) {}
