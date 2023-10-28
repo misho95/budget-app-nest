@@ -42,4 +42,9 @@ export class AuthService {
     user.password = hashPassword;
     return user.save();
   }
+
+  async getProfile(userSign) {
+    const userInfo = await this.userModel.findOne({ _id: userSign.sub });
+    return userInfo;
+  }
 }

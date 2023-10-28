@@ -1,4 +1,12 @@
-import { Controller, Post, Body, HttpCode, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  HttpCode,
+  HttpStatus,
+  Get,
+  Request,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthSignUpInputValidator } from './auth.signup.input.validator';
 import { AuthSignInInputValidator } from './auth.signin.input.validator';
@@ -19,5 +27,10 @@ export class AuthController {
   @Post('/signup')
   signup(@Body() userData: AuthSignUpInputValidator) {
     return this.authService.singup(userData);
+  }
+
+  @Get('/profile')
+  getProfile(@Request() req) {
+    return this.authService.getProfile(req.user);
   }
 }
