@@ -1,16 +1,19 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import axios from "axios";
+import { userSignedIn } from "./zustand.store";
 
 const ProtectedRoute = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const user = userSignedIn((state) => state.user);
+  const setUser = userSignedIn((state) => state.setUser);
+  const clearUser = userSignedIn((state) => state.clearUser);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     const token = window.sessionStorage.getItem("token");
     if (!token) {
-      setUser(null);
+      clearUser();
       navigate("/signin");
     }
 
@@ -20,11 +23,10 @@ const ProtectedRoute = ({ children }) => {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => {
-        console.log(res);
         setUser(res.data);
       })
       .catch(() => {
-        setUser(null);
+        clearUser();
         navigate("/signin");
       });
   }, []);

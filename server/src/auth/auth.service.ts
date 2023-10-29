@@ -1,10 +1,16 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { UserModel } from 'src/models/user.model';
 import { userLoginDataType, userSignUpType } from './auth.type';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
+import { error } from 'console';
 
 @Injectable()
 export class AuthService {
@@ -30,7 +36,17 @@ export class AuthService {
     const checkMail = await this.userModel.findOne({ email });
 
     if (checkMail) {
-      return { error: 'Email is Arleady Used!' };
+      // throw new error('Email is Arleady Used!');
+      throw new HttpException(
+        {
+          status: HttpStatus.FORBIDDEN,
+          error: 'Email is Already In Used!',
+        },
+        HttpStatus.FORBIDDEN,
+        {
+          cause: error,
+        },
+      );
     }
 
     const saltOrRounds = 10;

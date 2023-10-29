@@ -8,6 +8,7 @@ const Input = ({ title, type, placeholder, value, set }) => {
         value={value}
         onChange={(e) => set(e.target.value)}
         className="w-full bg-transparent p-2 focus:outline-none"
+        autoComplete={"on"}
         required
       />
     </fieldset>
