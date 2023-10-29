@@ -15,6 +15,8 @@ export class ExpenseModel {
   @Prop()
   category: string;
   @Prop()
+  createdAt: string;
+  @Prop()
   userId: string;
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'user' })
   user: UserModel;

@@ -42,6 +42,7 @@ const App = () => {
           return (
             <Expense
               key={e._id}
+              id={e._id}
               type={e.type}
               category={e.category}
               amount={e.amount}

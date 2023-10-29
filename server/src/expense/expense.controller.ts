@@ -31,6 +31,7 @@ export class ExpenseController {
   postNewExpense(@Body() expenseData: ExpenseInputValidator) {
     return this.expenseService.postNewExpense(expenseData);
   }
+
   @Put('/:expenseId')
   updateExpense(
     @Param('expenseId') expenseId: string,

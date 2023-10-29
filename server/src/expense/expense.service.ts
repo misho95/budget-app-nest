@@ -18,17 +18,21 @@ export class ExpenseService {
   }
 
   postNewExpense(expenseData: expenseData) {
-    const { amount, category, type } = expenseData;
+    const { amount, category, type, createdAt } = expenseData;
     const expense = new this.expenseModel();
     expense.amount = amount;
     expense.category = category;
     expense.type = type;
+    expense.createdAt = createdAt;
     return expense.save();
   }
 
   updateExpense(id: string, updatedExpense: expenseData) {
-    const { amount, category, type } = updatedExpense;
-    return this.expenseModel.updateOne({ _id: id }, { amount, category, type });
+    const { amount, category, type, createdAt } = updatedExpense;
+    return this.expenseModel.updateOne(
+      { _id: id },
+      { amount, category, type, createdAt },
+    );
   }
 
   deleteExpense(id: string) {

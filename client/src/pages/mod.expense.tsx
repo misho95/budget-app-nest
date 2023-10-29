@@ -10,7 +10,7 @@ const ModExpense = () => {
   return (
     <AppContainer>
       <Header />
-      {!expenseId ? <AddExpense /> : <EditExpense />}
+      {!expenseId ? <AddExpense /> : <EditExpense id={expenseId} />}
     </AppContainer>
   );
 };
