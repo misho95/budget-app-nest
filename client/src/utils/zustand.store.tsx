@@ -21,3 +21,15 @@ export const userSignedIn = create<userSignedInType>((set) => ({
   setUser: (userData) => set(() => ({ user: userData })),
   clearUser: () => set({ user: null }),
 }));
+
+interface tokenStoredType {
+  token: string | null;
+  setToken: (token: string) => void;
+  clearToken: () => void;
+}
+
+export const tokenStored = create<tokenStoredType>((set) => ({
+  token: null,
+  setToken: (token) => set(() => ({ token })),
+  clearToken: () => set({ token: null }),
+}));

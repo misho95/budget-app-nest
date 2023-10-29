@@ -6,6 +6,7 @@ import App from "./pages/app";
 import SignIn from "./pages/signin";
 import ProtectedRoute from "./utils/protected.route";
 import SignUp from "./pages/signup";
+import ModExpense from "./pages/mod.expense";
 
 const router = createBrowserRouter([
   {
@@ -13,6 +14,22 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <App />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/modexpense",
+    element: (
+      <ProtectedRoute>
+        <ModExpense />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/modexpense/:expenseId",
+    element: (
+      <ProtectedRoute>
+        <ModExpense />
       </ProtectedRoute>
     ),
   },

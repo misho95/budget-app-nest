@@ -21,7 +21,7 @@ const Header = () => {
             className={"w-6 h-6 text-neutral-300 hover:text-neutral-100"}
           />
         </Link>
-        <Link to={"/"}>
+        <Link to={"/modexpense"}>
           <IoIosAddCircle
             className={"w-6 h-6 text-neutral-300 hover:text-neutral-100"}
           />
