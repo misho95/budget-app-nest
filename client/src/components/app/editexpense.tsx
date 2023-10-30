@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Input from "../forms/input";
 import { tokenStored } from "../../utils/zustand.store";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const EditExpense = ({ id }) => {
   const [amount, setAmount] = useState(0);
@@ -10,6 +11,7 @@ const EditExpense = ({ id }) => {
   const [date, setDate] = useState("");
 
   const token = tokenStored((state) => state.token);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios({
@@ -45,7 +47,7 @@ const EditExpense = ({ id }) => {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => {
-        console.log(res);
+        navigate("/");
       })
       .catch((err) => {
         console.log(err);
@@ -91,9 +93,18 @@ const EditExpense = ({ id }) => {
           value={category}
           className="w-full border-[1px] border-neutral-400 rounded-lg bg-transparent p-2 focus:outline-none"
         >
-          <option value={""}></option>
-          <option value="shopping">Shopping</option>
-          <option value="shopping">Gym</option>
+          <option disabled></option>
+          {type === "expense" ? (
+            <>
+              <option value="shopping">Shopping</option>
+              <option value="shopping">Gym</option>
+            </>
+          ) : type === "income" ? (
+            <>
+              <option value="invoice">Invoice</option>
+              <option value="other">Other</option>
+            </>
+          ) : null}
         </select>
 
         <input

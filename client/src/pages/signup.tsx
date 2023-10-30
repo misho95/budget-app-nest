@@ -8,6 +8,7 @@ const SignUp = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
   const navigate = useNavigate();
 
@@ -29,6 +30,7 @@ const SignUp = () => {
       })
       .catch(function (err) {
         const error = err.response.data.error;
+        setError(error);
         console.log(error);
       });
   };
@@ -64,7 +66,7 @@ const SignUp = () => {
             value={password}
             set={setPassword}
           />
-
+          {error && <span className="text-red-500 text-sm">{error}</span>}
           <p>
             Already have an account?
             <Link to={"/signin"} className="text-indigo-500">

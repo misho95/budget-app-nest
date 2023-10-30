@@ -1,8 +1,23 @@
+import axios from "axios";
 import { TiDelete, TiEdit } from "react-icons/ti";
 import { Link } from "react-router-dom";
+import { tokenStored } from "../../utils/zustand.store";
 
-const Expense = ({ id, type, category, amount, createdAt }) => {
-  const date = new Date(createdAt).toString();
+const Expense = ({ id, type, category, amount, createdAt, filterExpense }) => {
+  const token = tokenStored((state) => state.token);
+  const deleteExpense = () => {
+    axios({
+      method: "delete",
+      url: `http://localhost:3000/api/v1/expenses/${id}`,
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((res) => {
+        filterExpense(id);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <article
@@ -23,7 +38,7 @@ const Expense = ({ id, type, category, amount, createdAt }) => {
         <b>Date:</b> {createdAt.slice(0, 11)}
       </div>
       <div className="absolute right-0 top-0 flex flex-col justify-between h-full p-2 text-neutral-500">
-        <button>
+        <button onClick={deleteExpense}>
           <TiDelete className={"w-6 h-6 hover:text-neutral-700"} />
         </button>
         <Link to={`/modexpense/${id}`}>

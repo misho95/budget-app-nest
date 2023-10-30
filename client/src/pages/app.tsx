@@ -34,6 +34,15 @@ const App = () => {
       });
   }, []);
 
+  const filterExpense = (id: string) => {
+    const filter = expense.filter((e) => {
+      if (e._id !== id) {
+        return e;
+      }
+    });
+    setExpense(filter);
+  };
+
   return (
     <AppContainer>
       <Header />
@@ -47,6 +56,7 @@ const App = () => {
               category={e.category}
               amount={e.amount}
               createdAt={e.createdAt}
+              filterExpense={filterExpense}
             />
           );
         })}

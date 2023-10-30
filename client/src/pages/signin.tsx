@@ -7,6 +7,7 @@ import axios from "axios";
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
   const navigate = useNavigate();
 
@@ -28,6 +29,7 @@ const SignIn = () => {
       })
       .catch(function (err) {
         console.log(err);
+        setError("Wrong Credentials!");
       });
   };
 
@@ -55,7 +57,7 @@ const SignIn = () => {
             value={password}
             set={setPassword}
           />
-
+          {error && <span className="text-red-500 text-sm">{error}</span>}
           <p>
             Dont have an account?
             <Link to={"/signup"} className="text-indigo-500">

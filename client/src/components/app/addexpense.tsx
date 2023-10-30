@@ -75,9 +75,18 @@ const AddExpense = () => {
           className="w-full border-[1px] border-neutral-400 rounded-lg bg-transparent p-2 focus:outline-none"
           required
         >
-          <option></option>
-          <option value="shopping">Shopping</option>
-          <option value="shopping">Gym</option>
+          <option disabled></option>
+          {type === "expense" ? (
+            <>
+              <option value="shopping">Shopping</option>
+              <option value="shopping">Gym</option>
+            </>
+          ) : type === "income" ? (
+            <>
+              <option value="invoice">Invoice</option>
+              <option value="other">Other</option>
+            </>
+          ) : null}
         </select>
 
         <input
