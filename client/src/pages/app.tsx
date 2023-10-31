@@ -27,6 +27,7 @@ const App = () => {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => {
+        console.log(res.data);
         setExpense(res.data);
       })
       .catch((err) => {
@@ -43,9 +44,13 @@ const App = () => {
     setExpense(filter);
   };
 
+  const clear = () => {
+    setExpense([]);
+  };
+
   return (
     <AppContainer>
-      <Header />
+      <Header clear={clear} />
       <ExpenseContainer>
         {expense.map((e) => {
           return (

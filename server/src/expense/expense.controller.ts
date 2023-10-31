@@ -7,6 +7,7 @@ import {
   Put,
   Delete,
   UseGuards,
+  Request,
 } from '@nestjs/common';
 import { ExpenseService } from './expense.service';
 import { ExpenseInputValidator } from './expense.input.validator';
@@ -18,8 +19,9 @@ export class ExpenseController {
   constructor(private readonly expenseService: ExpenseService) {}
 
   @Get('/')
-  getAllExpenses() {
-    return this.expenseService.getAllExpenses();
+  getAllExpenses(@Request() req) {
+    console.log(req.user);
+    return this.expenseService.getAllExpenses(req.user.sub);
   }
 
   @Get('/:expenseId')
@@ -28,8 +30,9 @@ export class ExpenseController {
   }
 
   @Post('/')
-  postNewExpense(@Body() expenseData: ExpenseInputValidator) {
-    return this.expenseService.postNewExpense(expenseData);
+  postNewExpense(@Request() req, @Body() expenseData: ExpenseInputValidator) {
+    const userId = req.user.sub;
+    return this.expenseService.postNewExpense(expenseData, userId);
   }
 
   @Put('/:expenseId')

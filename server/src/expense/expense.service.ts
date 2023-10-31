@@ -9,21 +9,22 @@ export class ExpenseService {
   constructor(
     @InjectModel(ExpenseModel.name) private expenseModel: Model<ExpenseModel>,
   ) {}
-  getAllExpenses() {
-    return this.expenseModel.find();
+  getAllExpenses(userId) {
+    return this.expenseModel.find({ userId });
   }
 
   getExpenseById(id: string) {
     return this.expenseModel.findOne({ _id: id });
   }
 
-  postNewExpense(expenseData: expenseData) {
+  postNewExpense(expenseData: expenseData, userId: string) {
     const { amount, category, type, createdAt } = expenseData;
     const expense = new this.expenseModel();
     expense.amount = amount;
     expense.category = category;
     expense.type = type;
     expense.createdAt = createdAt;
+    expense.userId = userId;
     return expense.save();
   }
 
