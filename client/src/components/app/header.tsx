@@ -3,14 +3,30 @@ import { AiFillHome } from "react-icons/ai";
 import { GoSignOut } from "react-icons/go";
 import { IoIosAddCircle } from "react-icons/io";
 import Avatar from "@mui/material/Avatar";
-import { userSignedIn } from "../../utils/zustand.store";
+import { tokenStored, userSignedIn } from "../../utils/zustand.store";
+import Cookies from "universal-cookie";
+import axios from "axios";
 
 const Header = ({ clear }) => {
   const navigate = useNavigate();
+  const cookies = new Cookies();
+  const token = tokenStored((state) => state.token);
+
   const signOut = () => {
-    window.sessionStorage.removeItem("token");
-    clear();
-    navigate("/signin");
+    axios({
+      method: "get",
+      url: "http://localhost:3000/api/v1/auth/signout",
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((res) => {
+        console.log(res);
+        cookies.remove("access_token");
+        clear();
+        navigate("/signin");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const user = userSignedIn((state) => state.user);

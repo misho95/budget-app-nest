@@ -15,7 +15,6 @@ const ProtectedRoute = ({ children }) => {
   const cookies = new Cookies();
 
   useEffect(() => {
-    console.log("running protected page...");
     const getToken = cookies.get("access_token");
 
     if (!getToken) {

@@ -33,4 +33,10 @@ export class AuthController {
   getProfile(@Request() req) {
     return this.authService.getProfile(req.user);
   }
+
+  @Get('/signout')
+  signout(@Request() req) {
+    req.user = '';
+    return 'signout';
+  }
 }
