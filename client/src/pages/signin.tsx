@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Input from "../components/forms/input";
 import axios from "axios";
+import Cookies from "universal-cookie";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -10,6 +11,7 @@ const SignIn = () => {
   const [error, setError] = useState<string | null>(null);
 
   const navigate = useNavigate();
+  const cookies = new Cookies();
 
   const submitSingUp = (e) => {
     e.preventDefault();
@@ -23,8 +25,10 @@ const SignIn = () => {
       },
     })
       .then(function (res) {
-        const token = res.data.access_token;
-        window.sessionStorage.setItem("token", token);
+        const accessToken = res.data.access_token;
+
+        cookies.set("access_token", accessToken);
+
         navigate("/");
       })
       .catch(function (err) {

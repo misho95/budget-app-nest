@@ -20,7 +20,6 @@ export class ExpenseController {
 
   @Get('/')
   getAllExpenses(@Request() req) {
-    console.log(req.user);
     return this.expenseService.getAllExpenses(req.user.sub);
   }
 

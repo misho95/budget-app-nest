@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
 import { tokenStored, userSignedIn } from "./zustand.store";
+import Cookies from "universal-cookie";
 
 const ProtectedRoute = ({ children }) => {
   const user = userSignedIn((state) => state.user);
@@ -11,9 +12,11 @@ const ProtectedRoute = ({ children }) => {
   const clearToken = tokenStored((state) => state.clearToken);
 
   const navigate = useNavigate();
+  const cookies = new Cookies();
 
   useEffect(() => {
-    const getToken = window.sessionStorage.getItem("token");
+    console.log("running protected page...");
+    const getToken = cookies.get("access_token");
 
     if (!getToken) {
       clearUser();
